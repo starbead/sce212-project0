@@ -2,4 +2,4 @@ tags
 *.o
 pa0_b
 tags
-my_outputs/*
+my_outputs/output*
