@@ -93,6 +93,41 @@ file_t* find_create_file(directory_t* dir, char* name, bool* is_create) {
 // Everything starts in root_dir. You can implement this function using find_create_dir() and find_create_file().
 void make_dir_and_file(directory_t* root_dir, char** token_list, int num_token) {
     /* Fill this function */
+    char temp_s[MAX_BUFFER_SIZE];
+    directory_t *dir;
+    directory_t *temp_dir;
+    file_t *temp_file;
+
+    int temp = num_token;
+    bool is_create = false;
+    int i = 0;
+
+    
+    dir = root_dir;
+    
+    while(i < num_token - 1){
+
+        temp_dir = find_create_dir(dir, token_list[i], &is_create);
+        
+        if(is_create){
+            dir->dir_list[dir->num_dir] = create_dir(token_list[i]);
+            dir->num_dir++;
+        }
+        
+        dir = find_dir(dir, token_list[i]);
+        
+        is_create = false;
+
+        i++;
+    }
+
+    temp_file = find_create_file(dir, token_list[i], &is_create);
+
+    if(is_create){
+        dir->file_list[dir->num_file] = create_file(token_list[i]);
+        dir->num_file++;
+    }
+
 }
 
 void free_dir_and_file(directory_t* dir) {
@@ -121,7 +156,9 @@ directory_t* find_target_dir(directory_t* root_dir, char** token_list, int num_t
 
     for (index = 0; index < num_token; index++) {
         strcat(path, "/");
+        
         token = token_list[index];
+        
         child_dir = find_dir(current_dir, token);
 
         if (child_dir == NULL) {

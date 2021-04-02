@@ -36,9 +36,9 @@ int main(int argc, char **argv) {
         int num_token = 0;
 
         token_list = (char**)malloc(sizeof(char*)*MAX_TOKEN_NUM);
-
+        
         num_token = parse_str_to_list(buff, token_list);
-
+        
         make_dir_and_file(root_dir, token_list, num_token);
 
         free_token_list(token_list, num_token);
